@@ -1,8 +1,8 @@
 'use strict';
 
 module.exports = class TodoItem {
-    constructor(text) {
-        this.text = text;
+    constructor(name) {
+        this.name = name;
         this.isCompleted = false;
     }
 

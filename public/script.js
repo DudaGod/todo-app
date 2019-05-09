@@ -1,15 +1,13 @@
 'use strict';
 
-const addTaskForm = document.querySelector('.add-task-form');
 const addedTasks = document.querySelector('.added-tasks');
 const completedTasks = document.querySelector('.completed-tasks');
 
 document.addEventListener("DOMContentLoaded", () => {
-    fetch('/api/v1/todos')
-        .then((res) => res.json())
+    getTodoList()
         .then((todos = []) => {
             todos.forEach((todo, index) => {
-                const todoElem = createElement({tag: 'li', text: todo.text});
+                const todoElem = createElement({tag: 'li', text: todo.name});
                 const checkBox = createElement({
                     tag: 'input',
                     attrs: [
@@ -39,17 +37,10 @@ function checkBoxChangeListener(todoElem, todoIndex) {
             return;
         }
 
-        fetch('/api/v1/todos', {
-            method: 'PATCH',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({index: todoIndex})
-        });
-
         todoElem.remove();
         completedTasks.appendChild(todoElem);
+
+        completeTodo(todoIndex);
     }
 }
 
