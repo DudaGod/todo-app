@@ -1,25 +1,11 @@
 'use strict';
 
-const TodoList = require('../models/todo-list');
+const todos = require('../controllers/todos');
 
 module.exports = (router) => {
-    const todoList = new TodoList();
-
-    router.get('/todos', (req, res) => {
-        res.json(todoList.todos);
-    });
-
-    router.post('/todos', (req, res) => {
-        todoList.add(req.body['todo-text']);
-
-        res.redirect('/');
-    });
-
-    router.patch('/todos', (req, res) => {
-        todoList.complete(req.body.index);
-
-        res.end();
-    });
+    router.get('/todos', todos.get);
+    router.post('/todos', todos.add);
+    router.patch('/todos', todos.complete);
 
     return router;
 };
