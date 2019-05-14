@@ -1,5 +1,4 @@
 'use strict';
 
-const {assert} = require('chai');
-
-global.assert = assert;
+global.assert = require('chai').assert;
+global.sinon = require('sinon');

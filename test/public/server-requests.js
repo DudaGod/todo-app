@@ -1,18 +1,26 @@
 'use strict';
 
 const serverRequests = require('../../public/server-requests');
-const {assert} = require('chai');
 
 describe('server-requests', () => {
+    let fetchStub;
+
+    beforeEach(() => {
+        fetchStub = sinon.stub();
+        global.fetch = fetchStub;
+    });
+
+    afterEach(() => {
+        delete global.fetch;
+    });
+
     it('should get todo list from the server', async () => {
         // arrange
-        global.fetch = () => {
-            return Promise.resolve({
-                json: () => {
-                    return Promise.resolve(['todo-1', 'todo-2'])}
-                }
-            );
-        };
+        fetchStub.resolves({
+            json: () => {
+                return Promise.resolve(['todo-1', 'todo-2']);
+            }
+        });
 
         // act
         const result = await serverRequests.getTodoList();
@@ -22,17 +30,11 @@ describe('server-requests', () => {
     });
 
     it('should inform the server that todo item is completed', async () => {
-        // arrange
-        let latestArgs;
-        global.fetch = (...args) => {
-            latestArgs = args;
-            return Promise.resolve();
-        };
-
         // act
         await serverRequests.completeTodo(1);
 
         // assert
-        assert.equal(latestArgs[1].body, JSON.stringify({index: 1}));
+        assert.isTrue(fetchStub.calledOnce);
+        assert.equal(fetchStub.firstCall.args[1].body, JSON.stringify({index: 1}));
     });
 });
