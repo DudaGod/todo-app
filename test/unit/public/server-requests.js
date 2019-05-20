@@ -1,6 +1,6 @@
 'use strict';
 
-const serverRequests = require('../../public/server-requests');
+const serverRequests = require('../../../public/server-requests');
 
 describe('server-requests', () => {
     let fetchStub;
