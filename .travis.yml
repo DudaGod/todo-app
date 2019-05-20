@@ -1,0 +1,9 @@
+language: node_js
+node_js:
+  - 8
+install:
+  - npm ci
+  - npm run build
+script:
+  - npm run lint
+  - npm run test
