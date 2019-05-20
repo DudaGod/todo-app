@@ -1,6 +1,6 @@
 'use strict';
 
-const TodoList = require('../../models/todo-list');
+const TodoList = require('../../../models/todo-list');
 const {assert} = require('chai');
 
 describe('TodoList', () => {

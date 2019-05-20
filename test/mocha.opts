@@ -1,2 +1,2 @@
 --require ./test/setup
---recursive
+--recursive ./test/unit/**/*.js
