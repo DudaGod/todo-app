@@ -8,9 +8,14 @@ script:
   - npm run lint
   - npm run test:unit
 deploy:
-  provider: heroku
-  skip_cleanup: true
-  api_key:
-    secure: VewokPHI+ODVGgXq9ajKiuU1m4BlXWg/HUZgSQtmuf/JR3/uymAZYJHbHLseS3Sy7g6W9EtSjVnGYpYCqYEWX6aolkzGtJlgKsBgtlL8K8w5p6D4i1Rec1w9ojydLAoUOb79w+dnsd+dMwnhaLvuLmHIiugTFvqLCOrsTde4/I/gLEGUy2ROm/kyfYmHadZtFnhbdbz3JIcjW2vCqYODwStnmI9rWm/3VwK2We/S066AaxLnQBuNxsQ0hMAnqNzSLNZzqPn8U1LIEbqN3C9/96+OdekIt/XISWGhXJ0wDy9GkQbtxNYsjQDeqKGSuXAwCmR9zu0Tw9xVVHTjcWuE7CjzKM0HqNViQ+EZ9d3cZqzPa7ALD1F7YrSOkU+exMJOFBbiYuH8zyQctYMHiJrfKcUyXQCpL7U4I1NuoFt4LeVWAU6XrurTzbgW9D0IkfIySzU9IRDVDzQbsxssJKragsTfMdAJFQnntQjaiCm0OaWzXvHOe/hQBXpBixfCZpLeSWM6Jqr3NQuuY5ZtrqZ1TQgjyqz8vGrtZRSTIz0CCEYzhRLnPYhFpVrObNz88EczAjeIoJ4FlpMxWzMR5uvE3Vruzq5tbLwqVGEyPIGEZw3D2XBJwMxkBwKGwLaye4sBDWRNtk1pLsWDuP5ciu02l8wm+klVzGjT4rr5BOBi+BA=
-  app:
-    master: awesome-todo-app
+  - provider: surge
+    project: './public/'
+    domain: 'awesome-todo-app.surge.sh'
+    on:
+      branch: 'master'
+  - provider: heroku
+    skip_cleanup: true
+    api_key:
+      secure: VewokPHI+ODVGgXq9ajKiuU1m4BlXWg/HUZgSQtmuf/JR3/uymAZYJHbHLseS3Sy7g6W9EtSjVnGYpYCqYEWX6aolkzGtJlgKsBgtlL8K8w5p6D4i1Rec1w9ojydLAoUOb79w+dnsd+dMwnhaLvuLmHIiugTFvqLCOrsTde4/I/gLEGUy2ROm/kyfYmHadZtFnhbdbz3JIcjW2vCqYODwStnmI9rWm/3VwK2We/S066AaxLnQBuNxsQ0hMAnqNzSLNZzqPn8U1LIEbqN3C9/96+OdekIt/XISWGhXJ0wDy9GkQbtxNYsjQDeqKGSuXAwCmR9zu0Tw9xVVHTjcWuE7CjzKM0HqNViQ+EZ9d3cZqzPa7ALD1F7YrSOkU+exMJOFBbiYuH8zyQctYMHiJrfKcUyXQCpL7U4I1NuoFt4LeVWAU6XrurTzbgW9D0IkfIySzU9IRDVDzQbsxssJKragsTfMdAJFQnntQjaiCm0OaWzXvHOe/hQBXpBixfCZpLeSWM6Jqr3NQuuY5ZtrqZ1TQgjyqz8vGrtZRSTIz0CCEYzhRLnPYhFpVrObNz88EczAjeIoJ4FlpMxWzMR5uvE3Vruzq5tbLwqVGEyPIGEZw3D2XBJwMxkBwKGwLaye4sBDWRNtk1pLsWDuP5ciu02l8wm+klVzGjT4rr5BOBi+BA=
+    app:
+      master: awesome-todo-app

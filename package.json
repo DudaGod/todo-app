@@ -29,6 +29,7 @@
     "hermione": "^2.6.1",
     "html-reporter": "^4.6.0",
     "mocha": "^6.1.4",
-    "sinon": "^7.3.2"
+    "sinon": "^7.3.2",
+    "surge": "^0.20.5"
   }
 }
