@@ -8,6 +8,9 @@
     "test:unit": "mocha",
     "build": "echo \"Build successfully completed\" && exit 0"
   },
+  "engines": {
+    "node": "8.6.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/DudaGod/todo-app.git"
