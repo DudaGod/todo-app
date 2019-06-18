@@ -25,4 +25,26 @@ describe('TodoList', () => {
         // assert
         assert.isTrue(list.todos[0].isCompleted);
     });
+
+    it('should change name todo', async () => {
+        // arrange
+        const list = new TodoList(['come to the lecture', 'understand testing']);
+
+        // act
+        await list.changeTaskName(0, 'not come to the lecture');
+
+        // assert
+        assert.equal('not come to the lecture', list.todos[0].name);
+    });
+
+    it('should change name todo', async () => {
+        // arrange
+        const list = new TodoList(['come to the lecture', 'understand testing']);
+
+        // act
+        await list.changeTaskName(0, 'not come to the lecture');
+
+        // assert
+        assert.equal('not come to the lecture', list.todos[0].name);
+    });
 });

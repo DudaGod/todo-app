@@ -9,4 +9,12 @@ module.exports = class TodoItem {
     complete() {
         this.isCompleted = true;
     }
+
+    uncompleted() {
+        this.isCompleted = false;
+    }
+
+    changeName(name) {
+        this.name = name;
+    }
 };

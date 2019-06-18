@@ -18,3 +18,23 @@ exports.complete = (req, res) => {
 
     res.end();
 };
+
+exports.deleteTask = (req, res) => {
+    todoList.deleteTask(req.body.index);
+    res.end(JSON.stringify({status : 'ok'}));
+}
+
+exports.deleteCompletedTasks = (req, res) => {
+    todoList.deleteCompletedTasks();
+    res.end(JSON.stringify({status : 'ok'}));
+}
+
+exports.returnToUncompletedTodo = (req, res) => {
+    todoList.returnToUncompletedTodo(req.body.index);
+    res.end(JSON.stringify({status : 'ok'}));
+}
+
+exports.changeTaskName = (req, res) => {
+    todoList.changeTaskName(req.body.index, req.body.name);
+    res.end(JSON.stringify({status : 'ok'}));
+}
