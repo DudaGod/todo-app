@@ -26,6 +26,49 @@ describe('TodoList', () => {
         assert.isTrue(list.todos[0].isCompleted);
     });
 
+    it('should delete one task', async () => {
+        // arrange
+        const list = new TodoList(['come to the lecture', 'understand testing', 'come to the lecture']);
+
+        // act
+        await list.deleteTask(1);
+
+        // assert
+        assert.deepEqual(
+            [{
+                "isCompleted": false,
+                "name": "come to the lecture"
+            },
+            {
+                "isCompleted": false,
+                "name": "come to the lecture"
+            }],
+            list.todos
+        );
+    });
+
+    it('should delete all completed task', async () => {
+        // arrange
+        const list = new TodoList(['come to the lecture', 'understand testing', 'come to the lecture']);
+
+        // act
+        await list.complete(1)
+        await list. deleteCompletedTasks();
+
+        // assert
+        assert.deepEqual(
+            [{
+                "isCompleted": false,
+                "name": "come to the lecture"
+            },
+            {
+                "isCompleted": false,
+                "name": "come to the lecture"
+            }],
+            list.todos
+        );
+    });
+
     it('should change name todo', async () => {
         // arrange
         const list = new TodoList(['come to the lecture', 'understand testing']);

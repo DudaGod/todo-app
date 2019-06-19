@@ -62,23 +62,20 @@ function onClickDeleteAllCompletedTasks() {
 }
 
 
-function inputHandler(todoElem, index) {
-    return function(event) {
-        console.dir(event);
-        if(event.keyCode  === 13){
-            if(event.target.value === 0 || event.target.value === prev) {
-                parent.replaceChild(tmp, input);
+function onClickApply(parent, input, tmp, prev, li, todoIndex) {
+    return function() {
+            if(input.value === 0 || input.value === prev) {
+                parent.replaceChild(tmp, li);
                 return;
             }
-            changeTaskName(index, event.target.value)
+            changeTaskName(todoIndex, input.value)
             .then(()=>{
-                parent.replaceChild(tmp, input);
+                tmp.childNodes[1].innerText = input.value;
+                parent.replaceChild(tmp, li);
             });
             return;
         }
-        return;
-    }(event);
-}
+};
 
 function onChangeTaskNameListener(todoElem, todoIndex) {
     return function(event){
@@ -95,12 +92,19 @@ function onChangeTaskNameListener(todoElem, todoIndex) {
             attrs: [
                 {name: 'value', value: prev}
             ],
+        });
+
+        let button = createElement({
+            tag: 'button', 
+            text: 'apply',
             listeners: [
-                {type: 'keydown', listener: inputHandler}
+                {type: 'click', listener: onClickApply(parent, input, tmp, prev, li, todoIndex)}
             ]
         });
 
         li.appendChild(input);
+        li.appendChild(button);
+
         parent.replaceChild(li, tmp);
         
     }

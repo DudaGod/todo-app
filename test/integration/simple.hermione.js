@@ -26,4 +26,12 @@ describe('Todo-app', () => {
             .waitForVisible('.added-tasks li')
             .assertView('plain', '.added-tasks li');
     });
+
+    it('should render complited task in uncompleted tasks', function() {
+        return this.browser
+            .url('/')
+            .click('.completed-tasks li input[type=checkbox]')
+            .waitForVisible('.added-tasks li')
+            .assertView('plain', '.added-tasks li');
+    });
 });
