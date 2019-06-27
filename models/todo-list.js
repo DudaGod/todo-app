@@ -15,19 +15,19 @@ module.exports = class TodoList {
         this.todos[index].complete();
     }
 
-    deleteTask(index) {
-        this.todos.splice(index, 1);
+    delete(index) {
+        this.todos = this.todos.filter( (item, todosIndex) => todosIndex !== index);
     }
 
-    deleteCompletedTasks() {
-        this.todos = this.todos.filter( item => item.isCompleted !== true);
+    deleteCompleted() {
+        this.todos = this.todos.filter( item => !item.isCompleted);
     }
 
-    returnToUncompletedTodo(index) {
+    uncomplete(index) {
         this.todos[index].uncompleted();
     }
 
-    changeTaskName(index, name) {
+    rename(index, name) {
         this.todos[index].changeName(name)
     }
 };

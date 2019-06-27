@@ -23,8 +23,8 @@ ul {
 
 li {
   display: flex;
-  margin-top: 1%;
-  margin-bottom: 1%;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .delete-all-completed-tasks {

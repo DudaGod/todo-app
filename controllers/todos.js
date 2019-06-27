@@ -19,22 +19,22 @@ exports.complete = (req, res) => {
     res.end();
 };
 
-exports.deleteTask = (req, res) => {
-    todoList.deleteTask(req.body.index);
+exports.delete = (req, res) => {
+    todoList.delete(req.body.index);
     res.end(JSON.stringify({status : 'ok'}));
 }
 
-exports.deleteCompletedTasks = (req, res) => {
-    todoList.deleteCompletedTasks();
+exports.deleteCompleted = (req, res) => {
+    todoList.deleteCompleted();
     res.end(JSON.stringify({status : 'ok'}));
 }
 
-exports.returnToUncompletedTodo = (req, res) => {
-    todoList.returnToUncompletedTodo(req.body.index);
+exports.uncomplete = (req, res) => {
+    todoList.uncomplete(req.body.index);
     res.end(JSON.stringify({status : 'ok'}));
 }
 
-exports.changeTaskName = (req, res) => {
-    todoList.changeTaskName(req.body.index, req.body.name);
+exports.rename = (req, res) => {
+    todoList.rename(req.body.index, req.body.name);
     res.end(JSON.stringify({status : 'ok'}));
 }

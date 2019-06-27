@@ -28,32 +28,34 @@ describe('TodoList', () => {
 
     it('should delete one task', async () => {
         // arrange
-        const list = new TodoList(['come to the lecture', 'understand testing', 'come to the lecture']);
+        const list = new TodoList(['come to the lecture', 'understand testing', 'come to the tutor']);
 
         // act
-        await list.deleteTask(1);
+        await list.delete(1);
 
         // assert
-        assert.deepEqual(
-            [{
-                "isCompleted": false,
-                "name": "come to the lecture"
-            },
-            {
-                "isCompleted": false,
-                "name": "come to the lecture"
-            }],
-            list.todos
-        );
+        assert.deepEqual(2, list.todos.length);
+    });
+
+    it('should delete one completed task', async () => {
+        // arrange
+        const list = new TodoList(['come to the lecture', 'understand testing']);
+
+        // act
+        await list.complete(1)
+        await list.delete(1);
+
+        // assert
+        assert.deepEqual(1, list.todos.length);
     });
 
     it('should delete all completed task', async () => {
         // arrange
-        const list = new TodoList(['come to the lecture', 'understand testing', 'come to the lecture']);
+        const list = new TodoList(['come to the lecture', 'understand testing', 'come to the tutor']);
 
         // act
         await list.complete(1)
-        await list. deleteCompletedTasks();
+        await list. deleteCompleted();
 
         // assert
         assert.deepEqual(
@@ -63,31 +65,21 @@ describe('TodoList', () => {
             },
             {
                 "isCompleted": false,
-                "name": "come to the lecture"
+                "name": "come to the tutor"
             }],
             list.todos
         );
     });
 
-    it('should change name todo', async () => {
+    it('should rename todo', async () => {
         // arrange
         const list = new TodoList(['come to the lecture', 'understand testing']);
 
         // act
-        await list.changeTaskName(0, 'not come to the lecture');
+        await list.rename(0, 'not come to the lecture');
 
         // assert
         assert.equal('not come to the lecture', list.todos[0].name);
     });
 
-    it('should change name todo', async () => {
-        // arrange
-        const list = new TodoList(['come to the lecture', 'understand testing']);
-
-        // act
-        await list.changeTaskName(0, 'not come to the lecture');
-
-        // assert
-        assert.equal('not come to the lecture', list.todos[0].name);
-    });
 });

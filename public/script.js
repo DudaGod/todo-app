@@ -26,6 +26,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 const text = createElement({
                     tag: 'div', 
                     text: todo.name,
+                    attrs: [
+                        {name: 'class', value: 'todo-name'}
+                    ],
                     listeners: [
                         {type: 'click', listener: onChangeTaskNameListener(todoElem, index)}
                     ]
@@ -35,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     tag: 'button', 
                     text: 'close',
                     listeners: [
-                        {type: 'click', listener: deleteThisTask(todoElem, index)}
+                        {type: 'click', listener: deleteTodo(todoElem, index)}
                     ]
                 });
 
@@ -43,9 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     checkBox.setAttribute('checked', todo.isCompleted);
                 }
 
-                todoElem.appendChild(checkBox);
-                todoElem.appendChild(text);
-                todoElem.appendChild(buttonClose);
+                appendChilds(todoElem, [checkBox, text, buttonClose])
 
                 todo.isCompleted
                     ? completedTasks.appendChild(todoElem)
@@ -57,25 +58,14 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function onClickDeleteAllCompletedTasks() {
-    deleteAllCompletedTasks();
-    location.reload();
+    if(completedTasks.childNodes.length > 0){
+        deleteAllCompletedTasks()
+            .then(
+                () => completedTasks.innerHTML = ""
+            );
+    }
+    return;
 }
-
-
-function onClickApply(parent, input, tmp, prev, li, todoIndex) {
-    return function() {
-            if(input.value === 0 || input.value === prev) {
-                parent.replaceChild(tmp, li);
-                return;
-            }
-            changeTaskName(todoIndex, input.value)
-            .then(()=>{
-                tmp.childNodes[1].innerText = input.value;
-                parent.replaceChild(tmp, li);
-            });
-            return;
-        }
-};
 
 function onChangeTaskNameListener(todoElem, todoIndex) {
     return function(event){
@@ -98,26 +88,39 @@ function onChangeTaskNameListener(todoElem, todoIndex) {
             tag: 'button', 
             text: 'apply',
             listeners: [
-                {type: 'click', listener: onClickApply(parent, input, tmp, prev, li, todoIndex)}
+                {
+                    type: 'click', 
+                    listener: onClickApply(
+                        { parent, input, tmp, prev, li, todoIndex }
+                    )
+                }
             ]
         });
-
-        li.appendChild(input);
-        li.appendChild(button);
-
+        appendChilds(li, [input, button])
         parent.replaceChild(li, tmp);
-        
     }
 }
+
+function onClickApply(closureObject) {
+    return function() {
+            if(closureObject.input.value === 0 || closureObject.input.value === closureObject.prev) {
+                closureObject.parent.replaceChild(closureObject.tmp, closureObject.li);
+                return;
+            }
+            changeTaskName(closureObject.todoIndex, closureObject.input.value)
+                .then(() => { 
+                    closureObject.tmp.querySelector('.todo-name').innerText = closureObject.input.value;
+                    closureObject.parent.replaceChild(closureObject.tmp, closureObject.li);
+                });
+        }
+};
 
 function checkBoxChangeListener(todoElem, todoIndex) {
     return function() {
         if (!(this.checked && doesHaveParent(this, 'added-tasks'))) {
             todoElem.remove();
             returnToUncompletedTodo(todoIndex)
-            .then( data => {
-                addedTasks.appendChild(todoElem);
-            });
+            .then( () => addedTasks.appendChild(todoElem));
             return;
         }
 
@@ -128,12 +131,10 @@ function checkBoxChangeListener(todoElem, todoIndex) {
     }
 }
 
-function deleteThisTask(todoElem, todoIndex) {
+function deleteTodo(todoElem, todoIndex) {
     return function() {
         deleteTask(todoIndex)
-        .then( () => {
-            todoElem.remove();
-        });
+            .then( () => todoElem.remove());
     }
 }
 
@@ -163,4 +164,10 @@ function doesHaveParent(element, className) {
     return element.parentElement
         ? doesHaveParent(element.parentElement, className)
         : false;
+}
+
+function appendChilds(element, childs){
+    childs.forEach(function(value){
+        element.appendChild(value);
+    })
 }
